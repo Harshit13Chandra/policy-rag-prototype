@@ -1,0 +1,13 @@
+# .gitignore
+.env
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+node_modules/
+storage/uploads/*
+!storage/uploads/.gitkeep
+*.db
+.DS_Store
