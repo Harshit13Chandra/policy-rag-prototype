@@ -1,0 +1,207 @@
+/* 1. Shell and Body */
+body {
+    margin: 0;
+    overflow: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: #ffffff;
+}
+
+#app-shell {
+    height: 100vh;
+}
+
+/* 2. Sidebar overrides */
+#sidebar {
+    background-color: #f7f7f8 !important;
+    border-right: 1px solid #e0e0e0 !important;
+}
+
+/* 3 & 4. Conversation Items */
+.conversation-item {
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.2s ease;
+    margin-bottom: 0.25rem;
+    color: #333;
+}
+
+.conversation-item:hover {
+    background-color: #ebebeb;
+}
+
+.conversation-item.active {
+    background-color: #e6f0ff;
+    color: #084298;
+    font-weight: 500;
+}
+
+.conversation-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-grow: 1;
+}
+
+.conversation-actions {
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    margin-left: 0.5rem;
+}
+
+.conversation-item:hover .conversation-actions {
+    opacity: 1;
+}
+
+/* 5. Messages Container */
+#messages-container {
+    max-width: 768px;
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* 6, 7, 8. Message Bubbles */
+.message-bubble {
+    border-radius: 16px;
+    padding: 1rem 1.25rem;
+    max-width: 75%;
+    font-size: 1rem;
+    line-height: 1.6;
+    word-wrap: break-word;
+}
+
+.message-bubble p:last-child {
+    margin-bottom: 0;
+}
+
+.message-bubble.user {
+    align-self: flex-end;
+    background-color: #0d6efd;
+    color: white;
+    border-bottom-right-radius: 4px;
+}
+
+.message-bubble.assistant {
+    align-self: flex-start;
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+    color: #212529;
+    border-bottom-left-radius: 4px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+/* 9. Citations */
+.citation-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #e2e3e5;
+    color: #495057;
+    border-radius: 12px;
+    padding: 0.15rem 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-left: 0.4rem;
+    vertical-align: super;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.15s ease;
+}
+
+.citation-badge:hover {
+    background-color: #ced4da;
+    color: #212529;
+}
+
+/* 10. Chat Input Bar */
+#chat-input-bar {
+    width: 100%;
+}
+
+#chat-input-bar .input-group {
+    background-color: white;
+    border-radius: 24px;
+    border: 1px solid #dee2e6;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    padding: 0.25rem;
+    align-items: flex-end;
+}
+
+/* 11. Message Input */
+#message-input {
+    border: none;
+    resize: none;
+    max-height: 150px;
+    overflow-y: auto;
+    padding: 0.75rem 1rem;
+    background: transparent;
+}
+
+#message-input:focus {
+    box-shadow: none;
+    outline: none;
+}
+
+#send-btn {
+    border-radius: 20px !important;
+    margin-left: 0.5rem;
+    height: 44px;
+    margin-bottom: 0.15rem; /* Align to bottom of textarea visually */
+}
+
+/* 12. Typing Indicator */
+.typing-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 0.5rem;
+}
+
+.typing-dot {
+    width: 6px;
+    height: 6px;
+    background-color: #6c757d;
+    border-radius: 50%;
+    animation: typingBounce 1.4s infinite ease-in-out both;
+}
+
+.typing-dot:nth-child(1) { animation-delay: -0.32s; }
+.typing-dot:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes typingBounce {
+    0%, 80%, 100% { transform: scale(0); }
+    40% { transform: scale(1); }
+}
+
+/* 13. Mobile Overrides */
+@media (max-width: 767.98px) {
+    /* If JS manually toggles .show without Bootstrap offcanvas logic */
+    #sidebar.show {
+        display: flex !important;
+        position: fixed;
+        height: 100%;
+        z-index: 1050;
+        width: 80%;
+        max-width: 320px;
+        box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+    }
+    
+    #messages-container {
+        max-width: 100%;
+        padding: 1rem 0.75rem !important;
+    }
+    
+    #chat-input-bar .input-group {
+        max-width: 100%;
+    }
+    
+    .message-bubble {
+        max-width: 85%;
+    }
+}
