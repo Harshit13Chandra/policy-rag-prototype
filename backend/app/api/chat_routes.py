@@ -20,6 +20,7 @@ from app.services.embedding_client import EmbeddingClient
 from app.services.vectordb_client import QdrantClientWrapper
 from app.services.gemini_client import GeminiClient
 from app.services.rag_service import RAGService
+from app.services.title_service import TitleService
 from app.models.message import MessageCitation
 from app.models.chunk import Chunk
 
@@ -129,8 +130,11 @@ def chat_query(request: QueryRequest, db: Session = Depends(get_db), current_use
                 
                 total_messages = len(msg_repo.get_by_conversation(request.conversation_id))
                 if total_messages == 2:
-                    # Phase 6 will replace this with real Gemini-based title generation
-                    new_title = request.question[:50] + "..." if len(request.question) > 50 else request.question
+                    # Note: this adds a small delay to the final SSE event for first messages only 
+                    # (one extra blocking Gemini call), which is an acceptable tradeoff for the prototype; 
+                    # a true non-blocking background task is a future improvement.
+                    title_service = TitleService(gemini_client)
+                    new_title = title_service.generate_title(request.question, full_text)
                     conv_repo.update_title(request.conversation_id, new_title)
                 
                 yield f"data: {json.dumps({'type': 'done', 'citations': item['citations'], 'message_id': str(assistant_message.id)})}\n\n"

@@ -28,3 +28,15 @@ class GeminiClient:
         except Exception as e:
             logger.error(f"Error during Gemini streaming: {str(e)}")
             yield f"[ERROR: {str(e)}]"
+
+    def generate_once(self, contents: str, config: dict | None = None) -> str:
+        try:
+            response = self.client.models.generate_content(
+                model=self.model_name,
+                contents=contents,
+                config=config
+            )
+            return response.text
+        except Exception as e:
+            logger.error(f"Error during Gemini generate_once: {str(e)}")
+            raise e
